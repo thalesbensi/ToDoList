@@ -37,6 +37,12 @@ public class TaskController {
         
     	return taskService.updateTask(data, id);
     }
+    
+    @PutMapping("/done/{id}")
+    public TaskDTO completeTask(@PathVariable Long id){
+        
+    	return taskService.completeTask(id);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteTask(@PathVariable Long id ){
