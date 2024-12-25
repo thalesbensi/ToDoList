@@ -2,8 +2,10 @@ package com.thalesbensi.ToDoList.controllers;
 
 import com.thalesbensi.ToDoList.dtos.TaskDTO;
 import com.thalesbensi.ToDoList.entities.Task;
+import com.thalesbensi.ToDoList.services.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +19,7 @@ public class TaskController {
 
     @GetMapping()
     public List<TaskDTO> findAll(){
-        return taskService.findAll:
+        return taskService.findAll();
     }
 
     @GetMapping("/{id}")
@@ -25,19 +27,21 @@ public class TaskController {
         return taskService.findById(id);
     }
 
-    @PostMapping("/{id}")
-    public TaskDTO findById(@RequestBody @Valid Task data){
+    @PostMapping()
+    public TaskDTO createTask(@RequestBody @Valid Task data){
         return taskService.createTask(data);
     }
 
     @PutMapping("/{id}")
-    public TaskDTO findById(@RequestBody @Valid Task data){
-        return taskService.updateTask(data);
+    public TaskDTO updateTask(@RequestBody @Valid Task data, @PathVariable Long id){
+        
+    	return taskService.updateTask(data, id);
     }
 
     @DeleteMapping("/{id}")
-    public TaskDTO findById(@PathVariable Long id ){
-        return taskService.deleteTask(id);
+    public ResponseEntity deleteTask(@PathVariable Long id ){
+        taskService.deleteTask(id);
+        return ResponseEntity.noContent().build();
     }
 
 

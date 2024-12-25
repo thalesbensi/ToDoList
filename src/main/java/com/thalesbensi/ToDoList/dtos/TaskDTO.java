@@ -17,9 +17,9 @@ public class TaskDTO {
     private Long id;
     private String title;
     private String description;
-    private TaskStatus Status;
+    private TaskStatus taskStatus;
     private Date createdAt;
-    private Date updateAt;
+    private Date updatedAt;
 
     public TaskDTO(Task entity) {
         BeanUtils.copyProperties(entity, this);
