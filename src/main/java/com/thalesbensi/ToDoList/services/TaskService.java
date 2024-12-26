@@ -52,7 +52,7 @@ public class TaskService {
 
             Task savedTask = taskRepository.save(existingTask);
             return new TaskDTO(savedTask);
-
+            
         } else {
             throw new EntityNotFoundException("Task with ID " + id + " not found");
         }
@@ -76,7 +76,6 @@ public class TaskService {
         }
     }
     	
-
    @Transactional
    public void deleteTask(Long id){
 
@@ -88,10 +87,7 @@ public class TaskService {
         } else {
             throw new EntityNotFoundException("Task with ID " + id + " not found");
         }
-
    }
-
-
 }
 
 

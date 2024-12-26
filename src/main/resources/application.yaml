@@ -1,16 +1,8 @@
 spring:
+  profiles:
+    active: prod
   application:
     name: ToDoList
-  h2:
-    console:
-      enabled: true
-  datasource:
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: 
-    driverClassName: org.h2.Driver
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: America/Sao_Paulo

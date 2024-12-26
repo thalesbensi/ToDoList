@@ -12,6 +12,7 @@ import java.util.Date;
 
 @Entity
 @Data
+@Table(name = "tb_tasks")
 public class Task {
 
     @Id
@@ -20,15 +21,20 @@ public class Task {
 
     @NotNull
     @Size(min = 3, max = 100)
+    @Column
     private String title;
 
+    @Column
     private String description;
 
     @Enumerated(EnumType.STRING)
+    @Column
     private TaskStatus taskStatus;
 
+    @Column
     private Date createdAt;
 
+    @Column
     private Date updatedAt;
 
     @PrePersist

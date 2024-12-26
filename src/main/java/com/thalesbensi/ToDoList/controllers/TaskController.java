@@ -34,13 +34,11 @@ public class TaskController {
 
     @PutMapping("/{id}")
     public TaskDTO updateTask(@RequestBody @Valid Task data, @PathVariable Long id){
-        
     	return taskService.updateTask(data, id);
     }
     
     @PutMapping("/done/{id}")
     public TaskDTO completeTask(@PathVariable Long id){
-        
     	return taskService.completeTask(id);
     }
 
