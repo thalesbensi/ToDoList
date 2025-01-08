@@ -1,4 +1,6 @@
 package com.thalesbensi.ToDoList.dtos;
 
-public record RegisterDTO(String login, String password, String role ) {
+import com.thalesbensi.ToDoList.enums.UserRole;
+
+public record RegisterDTO(String login, String password, UserRole role ) {
 }
