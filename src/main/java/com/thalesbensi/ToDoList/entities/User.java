@@ -28,7 +28,11 @@ public class User implements UserDetails {
     @Column
     private UserRole role;
 
-
+    public User(String login, String password, UserRole role) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -40,7 +44,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return "";
+        return login;
     }
 
     @Override
