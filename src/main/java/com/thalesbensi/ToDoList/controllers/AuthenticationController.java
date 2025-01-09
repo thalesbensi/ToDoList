@@ -1,9 +1,11 @@
 package com.thalesbensi.ToDoList.controllers;
 
 import com.thalesbensi.ToDoList.dtos.AuthenticationDTO;
+import com.thalesbensi.ToDoList.dtos.LoginResponseDTO;
 import com.thalesbensi.ToDoList.dtos.RegisterDTO;
 import com.thalesbensi.ToDoList.entities.User;
 import com.thalesbensi.ToDoList.repositories.UserRepository;
+import com.thalesbensi.ToDoList.services.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,20 +18,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/authorization")
+@RequestMapping("/auth")
 public class AuthenticationController {
 
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
     @PostMapping("/register")
