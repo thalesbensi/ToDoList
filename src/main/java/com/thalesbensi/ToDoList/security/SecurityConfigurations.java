@@ -26,6 +26,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/tasks").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/tasks/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/tasks/done/{id}").hasRole("ADMIN")
@@ -45,4 +46,5 @@ public class SecurityConfigurations {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
 }

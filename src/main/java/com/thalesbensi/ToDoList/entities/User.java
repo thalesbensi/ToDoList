@@ -2,6 +2,8 @@ package com.thalesbensi.ToDoList.entities;
 
 import com.thalesbensi.ToDoList.enums.UserRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,14 +23,18 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
+    @NotNull
     @Column
     private String login;
 
+    @NotNull
+    @Size(min = 3, max = 100)
     @Column
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", columnDefinition = "VARCHAR(50)")
+    @NotNull
     private UserRole role;
 
     public User(String login, String password, UserRole role) {
