@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +46,9 @@ public class TaskController {
             @ApiResponse(responseCode = "403", description = "Forbidden / User Don't Have The Necessary Role To Perform This Action")
     })
     @GetMapping("/{id}")
-    public TaskDTO findById(@PathVariable Long id ){
+    public ResponseEntity<TaskDTO> findById(@PathVariable Long id ){
 
-        return taskService.findById(id);
+        return ResponseEntity.ok(taskService.findById(id));
     }
 
 
@@ -60,34 +61,36 @@ public class TaskController {
             @ApiResponse(responseCode = "403", description = "Forbidden / User Don't Have The Necessary Role To Perform This Action")
     })
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TaskDTO createTask(@RequestBody @Valid Task data){
-        return taskService.createTask(data);
+    public ResponseEntity<TaskDTO> createTask(@RequestBody @Valid Task data){
+        TaskDTO createdTask = taskService.createTask(data);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
     }
 
 
     @Operation(summary = "Update a Task by Id in Database using a Id as a parameter", method = "PUT")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK / TaskUpdated"),
+            @ApiResponse(responseCode = "200", description = "OK / Task Updated"),
             @ApiResponse(responseCode = "404", description = "Not Found / Task with this Id not found"),
             @ApiResponse(responseCode = "401", description = "Unauthorized / User Not Authenticated"),
             @ApiResponse(responseCode = "403", description = "Forbidden / User Don't Have The Necessary Role To Perform This Action")
     })
     @PutMapping("/{id}")
-    public TaskDTO updateTask(@RequestBody @Valid Task data, @PathVariable Long id){
-    	return taskService.updateTask(data, id);
+    public ResponseEntity<TaskDTO> updateTask(@RequestBody @Valid Task data, @PathVariable Long id){
+    	return ResponseEntity.ok(taskService.updateTask(data, id));
+
     }
 
 
     @Operation(summary = "Set a Task status as COMPLETED in Database using a Id as a parameter", method = "PUT")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "OK / TaskUpdated"),
+            @ApiResponse(responseCode = "200", description = "OK / Task Updated"),
             @ApiResponse(responseCode = "404", description = "Not Found / Task with this Id not found"),
             @ApiResponse(responseCode = "401", description = "Unauthorized / User Not Authenticated"),
             @ApiResponse(responseCode = "403", description = "Forbidden / User Don't Have The Necessary Role To Perform This Action")
     })
     @PutMapping("/done/{id}")
-    public TaskDTO completeTask(@PathVariable Long id){
-    	return taskService.completeTask(id);
+    public ResponseEntity<TaskDTO> completeTask(@PathVariable Long id){
+    	return ResponseEntity.ok(taskService.completeTask(id));
     }
 
 
