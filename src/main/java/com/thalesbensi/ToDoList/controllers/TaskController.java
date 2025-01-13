@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/tasks", produces ={"application/json"})
-@Tag(name = "ToDoList RESTful API")
+@Tag(name = "Endpoints For Task Operations")
 public class TaskController {
 
     @Autowired
@@ -31,9 +31,9 @@ public class TaskController {
     })
     @GetMapping()
     public List<TaskDTO> findAll(){
+
         return taskService.findAll();
     }
-
 
 
     @Operation(summary = "Find a Task by Id in Database", method = "GET")

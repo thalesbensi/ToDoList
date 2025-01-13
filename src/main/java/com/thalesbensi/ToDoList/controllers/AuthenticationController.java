@@ -7,6 +7,8 @@ import com.thalesbensi.ToDoList.entities.User;
 import com.thalesbensi.ToDoList.repositories.UserRepository;
 import com.thalesbensi.ToDoList.services.TokenService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/auth")
+@Tag(name = "Endpoints For Authentication")
 public class AuthenticationController {
 
     @Autowired
@@ -31,6 +34,13 @@ public class AuthenticationController {
     private TokenService tokenService;
 
 
+    @Operation(summary = "Makes Login and Return a Token for Authenticate Requests ", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK / Successful Login  "),
+            @ApiResponse(responseCode = "400", description = "Bad Request / Validation Error"),
+            @ApiResponse(responseCode = "404", description = "Not Found / User Not Found"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized / Invalid Credentials")
+    })
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
@@ -41,6 +51,14 @@ public class AuthenticationController {
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
+    @Operation(summary = "Register a User in Database", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created / User Created With Success"),
+            @ApiResponse(responseCode = "400", description = "Bad Request / Validation Error"),
+            @ApiResponse(responseCode = "409", description = "Conflict / User With This Username Already Exists"),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")
+
+    })
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterDTO data){
         if(this.userRepository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
