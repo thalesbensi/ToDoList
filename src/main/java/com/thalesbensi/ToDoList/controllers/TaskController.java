@@ -23,16 +23,17 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
-    @Operation(summary = "Return a List of All Tasks in Database", method = "GET")
+    @Operation(summary = "Return a Page Tasks in Database based on RequestParams Page and Itens", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK / List Returned"),
             @ApiResponse(responseCode = "401", description = "Unauthorized / User Not Authenticated"),
             @ApiResponse(responseCode = "403", description = "Forbidden / User Don't Have The Necessary Role To Perform This Action")
     })
     @GetMapping()
-    public List<TaskDTO> findAll(){
+    public ResponseEntity<List<TaskDTO>> findAll(@RequestParam int page,
+                                                 @RequestParam int items){
 
-        return taskService.findAll();
+        return ResponseEntity.ok(taskService.findAll(page, items)) ;
     }
 
 

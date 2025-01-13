@@ -7,6 +7,8 @@ import com.thalesbensi.ToDoList.exceptions.IDNotFoundException;
 import com.thalesbensi.ToDoList.repositories.TaskRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +22,8 @@ public class TaskService {
     TaskRepository taskRepository;
 
     @Transactional()
-    public List<TaskDTO> findAll() {
-        List<Task> dto = taskRepository.findAll();
+    public List<TaskDTO> findAll(int page, int items ) {
+        Page<Task> dto = taskRepository.findAll(PageRequest.of(page, items));
         return dto.stream().map(x -> new TaskDTO(x)).toList();
     }
 
