@@ -22,7 +22,7 @@ public class TaskService {
     TaskRepository taskRepository;
 
     @Transactional()
-    public List<TaskDTO> findAll(int page, int items ) {
+    public List<TaskDTO> findAll(Integer page, Integer items ) {
         Page<Task> dto = taskRepository.findAll(PageRequest.of(page, items));
         return dto.stream().map(x -> new TaskDTO(x)).toList();
     }
