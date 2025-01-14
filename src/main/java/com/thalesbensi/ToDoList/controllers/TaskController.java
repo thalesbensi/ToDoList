@@ -24,7 +24,7 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
-    @Operation(summary = "Return a Page Tasks in Database based on RequestParams Page and Itens", method = "GET")
+    @Operation(summary = "Return a Page Tasks in Database based on RequestParams Page and Size", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK / List Returned"),
             @ApiResponse(responseCode = "401", description = "Unauthorized / User Not Authenticated"),
@@ -32,9 +32,9 @@ public class TaskController {
     })
     @GetMapping()
     public ResponseEntity<List<TaskDTO>> findAll(@RequestParam int page,
-                                                 @RequestParam int items){
+                                                 @RequestParam int size){
 
-        return ResponseEntity.ok(taskService.findAll(page, items)) ;
+        return ResponseEntity.ok(taskService.findAll(page, size)) ;
     }
 
 
