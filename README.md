@@ -106,7 +106,7 @@ Exemplo de payload:
 }
 ```
 #### Observação: 
- A "role", para fim de estudos, pode ser registrada como USER ou ADMIN, o usuário tipo só pode fazer requisições do tipo GET, já o usuário ADMIN pode fazer todo tipo de requisição.
+ A "role", para fim de estudos, pode ser registrada como USER ou ADMIN, o usuário tipo USER só pode fazer requisições do tipo GET, já o usuário ADMIN pode fazer todo tipo de requisição.
 
 - **POST /auth/login**: Faz login na API, assim recebendo um Token válido por 2 horas.
     Exemplo de payload:
